@@ -5,6 +5,7 @@
 
 Team Members
 Corey Parker | 1st Year
+
 Daniel Xu | 1st Year
 
 **General Idea**
