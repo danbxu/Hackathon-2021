@@ -4,6 +4,7 @@
 ### Team Name: Team 2
 
 Team Members
+
 Corey Parker | 1st Year
 
 Daniel Xu | 1st Year
