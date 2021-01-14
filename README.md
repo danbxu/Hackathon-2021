@@ -3,7 +3,7 @@
 # MCIT On-Campus 2021 Winter Hackathon  
 ### Team Name: Team 2
 
-Team Members
+### Team Members
 
 Corey Parker | 1st Year
 
