@@ -7,6 +7,8 @@ public class Course {
 	String name;
 	String instructor;
 	String meetTime;
+	String courseCode;
+	String section;
 	
 	public String getName() {
 		return name;
@@ -32,7 +34,24 @@ public class Course {
 		this.meetTime = meetTime;
 	}
 
-	public Courses(String name, String instructor, String meetTime) {
+
+	public String getCourseCode() {
+		return courseCode;
+	}
+
+	public void setCourseCode(String courseCode) {
+		this.courseCode = courseCode;
+	}
+
+	public String getSection() {
+		return section;
+	}
+
+	public void setSection(String section) {
+		this.section = section;
+	}
+
+	public Course(String name, String courseCode, String instructor, String meetTime, String section) {
 
 		if (name == null) {
 			throw new IllegalArgumentException ("name is NULL");
@@ -47,9 +66,8 @@ public class Course {
 		this.name = name;
 		this.instructor = instructor;
 		this.meetTime = meetTime;
+		this.courseCode = courseCode;
+		this.section = section;
 	}
-
-	
-	
 
 }
