@@ -1,0 +1,17 @@
+Name: abc
+Student ID: 123
+Date/Time: 01/15/2021 21:01:23
+
+Courses Registered: 1
+0: CIT-590 PROG LANG AND TECHNIQUES
+    Section 001 TBA
+    Instructor: KRAKOWSKY B
+
+Comments to:
+	Office of the University Registrar
+	University of Pennsylvania
+	Room 150 Franklin Building
+	3451 Walnut Street
+	Philadelphia, PA 19104-6291
+	Phone: (215) 898-6636 Fax: (215) 573-2076
+	registra@pobox.upenn.edu

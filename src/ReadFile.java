@@ -1,6 +1,10 @@
 import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 
 
 
@@ -8,6 +12,14 @@ public class ReadFile {
 	//Container to hold all 24 courses
 	static ArrayList<Course> hold = new ArrayList<Course>();
 
+	
+	/**
+	 * This method takes an input file with all the courses scrapped from the website and puts the courses
+	 * in a ArrayList<Course> container. ReadingFile() calls on parseAndInsert() to parse each line of the input file
+	 * by commas and creates a Course for each line in the input file.
+	 * 
+	 * @param fileName - name of file 
+	 */
 	public static void ReadingFile (String fileName) {
 		ArrayList<Course> courseList = new ArrayList<Course>();
 		File f = new File(fileName);
@@ -27,6 +39,12 @@ public class ReadFile {
 		}
 	}
 
+	/**
+	 * Creates a Course for each line in the input file, which contains all the courses available to students in
+	 * spring 2021
+	 * 
+	 * @param line - each line of the file
+	 */
 	public static void parseAndInsert(String line) {
 		if(line.contains(",")) {
 			String[] dump = line.split(",");
@@ -53,9 +71,52 @@ public class ReadFile {
 			hold.add(newCourse);
 		}
 	}
+	
+	/**
+	 * This method creates and writes to the output file called "out.txt". 
+	 * 
+	 * @param filename - Name of file to be written to 
+	 * @param arr - ArrayList of all the courses the student selected
+	 * @param studentName - Student name
+	 * @param studentID - Student ID
+	 * @throws IOException
+	 */
+	public static void fileWriter(String filename, ArrayList<Course> arr, String studentName, String studentID) throws IOException {
 
+		File file = new File (filename);
+		FileWriter newFile = new FileWriter(file);
+		PrintWriter test = new PrintWriter(newFile);
+		SimpleDateFormat dateStruc = new SimpleDateFormat("MM/DD/YYYY HH:MM:SS");
+		Date date = new Date();
 
-	//included/ needed to discuss
+		
+		test.println("Name: " + studentName);
+		test.println("Student ID: " + studentID);
+		test.println("Date/Time: " + dateStruc.format(date));
+		test.println();
+
+		test.println("Courses Registered: " + arr.size());
+		for (int i = 0; i < arr.size(); i++) {
+			test.println(i + ": " + arr.get(i).getCourseCode()+ " " + arr.get(i).getName() + 
+					"\n    Section " + arr.get(i).getSection() + " " + arr.get(i).getMeetTime() + 
+					"\n    Instructor: " + arr.get(i).getInstructor());
+		}
+
+		test.println();
+		test.println("Comments to:");
+		test.println("	Office of the University Registrar");
+		test.println("	University of Pennsylvania");
+		test.println("	Room 150 Franklin Building");
+		test.println("	3451 Walnut Street");
+		test.println("	Philadelphia, PA 19104-6291");
+		test.println("	Phone: (215) 898-6636 Fax: (215) 573-2076");
+		test.println("	registra@pobox.upenn.edu");
+		
+		test.close();
+
+	}
+
+	//NOTUSED
 	boolean correctInput2(int a) {
 		if (a >= 0 && a <= 23) {
 			return true;
@@ -65,7 +126,13 @@ public class ReadFile {
 		}
 	}
 
-	//Not sure if to use string or int 
+	/**
+	 * This method is just a helper to check user input is within 0 - 23
+	 * Considered using correctInput2() above but using inputs as strings is significantly easier
+	 * 
+	 * @param a - String user input for number associated with the course
+	 * @return
+	 */
 	boolean correctInput(String a) {
 		if (a.equals("0")) {
 			return true;
@@ -145,25 +212,46 @@ public class ReadFile {
 		}
 
 	}
-
-	public void Choose() {
+	
+	
+	/**
+	 * This method prompts the user to enter Name/StudentID and finally shows a list of available courses for spring 2021.
+	 * This method repeatedly prompts the user to add classes and only exits when either (1) user wishes to "Exit" 
+	 * or (2) the user selected 4 courses - maximum number of courses to take per semester. Finally, this method calls
+	 * fileWriter() to out the user's course schedule to a .txt file. 
+	 * 
+	 * @throws IOException
+	 */
+	public void Choose() throws IOException {
 		ArrayList<Course> pickedCourses = new ArrayList<Course>();
 		boolean donePicking = false;
 		Scanner a = new Scanner(System.in);
 		String check;
+		String studentName;
+		String studentID;
 
+
+		System.out.println("Please enter your name");
+		studentName = a.nextLine();
+
+		System.out.println("Please enter your student ID");
+		studentID = a.nextLine();
 
 		while (!donePicking) {
 			int b = 0;
 			if (pickedCourses.size() > 0) {
 				if (pickedCourses.size() == 4) {
+					System.out.println();
 					System.out.println("You have 4 courses in your schedule" );
-					System.out.println("If you are done registering, enter \"Exit\"");
-					if (a.nextLine().equals("Exit")) {
+					System.out.println("Your course schedule is complete");
+					System.out.println();
+//					if (a.nextLine().equals("Exit")) {
 						break;
-					}				
+//					}
+					//Can implement removing classes here
 				}
 				else {
+					System.out.println();
 					System.out.println("You have " + pickedCourses.size() + " course(s) in your schedule");
 					System.out.println("You can have a maximum of 4 courses");
 					System.out.println();
@@ -171,10 +259,9 @@ public class ReadFile {
 					if (a.nextLine().equals("Exit")) {
 						break;
 					}
+					//Can implement removing classes here
 				}
-
 			}
-
 			System.out.println("Please choose one of the following courses below by entering the number proceeding the course (only numbers 0 => 23)");
 			System.out.println();
 			System.out.println("You currently have " + pickedCourses.size() + " courses in your schedule.");
@@ -194,6 +281,7 @@ public class ReadFile {
 				input = a.nextLine();
 			}
 
+
 			//Need to implement way to input into file while checking if the course already exists
 			if (input.equals("0")) {
 				check = hold.get(0).getName();
@@ -205,6 +293,11 @@ public class ReadFile {
 				}
 				if (b == 0) {
 					pickedCourses.add(hold.get(0));
+				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
 				}
 			}
 			if (input.equals("1")) {
@@ -218,6 +311,11 @@ public class ReadFile {
 				if (b == 0) {
 					pickedCourses.add(hold.get(1));
 				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
+				}
 			}
 			if (input.equals("2")) {
 				check = hold.get(2).getName();
@@ -229,6 +327,11 @@ public class ReadFile {
 				}
 				if (b == 0) {
 					pickedCourses.add(hold.get(2));
+				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
 				}
 			}
 			if (input.equals("3")) {
@@ -242,6 +345,11 @@ public class ReadFile {
 				if (b == 0) {
 					pickedCourses.add(hold.get(3));
 				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
+				}
 			}
 			if (input.equals("4")) {
 				check = hold.get(4).getName();
@@ -253,6 +361,11 @@ public class ReadFile {
 				}
 				if (b == 0) {
 					pickedCourses.add(hold.get(4));
+				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
 				}
 			}
 			if (input.equals("5")) {
@@ -266,6 +379,11 @@ public class ReadFile {
 				if (b == 0) {
 					pickedCourses.add(hold.get(5));
 				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
+				}
 			}
 			if (input.equals("6")) {
 				check = hold.get(6).getName();
@@ -277,6 +395,11 @@ public class ReadFile {
 				}
 				if (b == 0) {
 					pickedCourses.add(hold.get(6));
+				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
 				}
 			}
 			if (input.equals("7")) {
@@ -290,6 +413,11 @@ public class ReadFile {
 				if (b == 0) {
 					pickedCourses.add(hold.get(7));
 				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
+				}
 			}
 			if (input.equals("8")) {
 				check = hold.get(8).getName();
@@ -301,6 +429,11 @@ public class ReadFile {
 				}
 				if (b == 0) {
 					pickedCourses.add(hold.get(8));
+				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
 				}
 			}
 			if (input.equals("9")) {
@@ -314,6 +447,11 @@ public class ReadFile {
 				if (b == 0) {
 					pickedCourses.add(hold.get(9));
 				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
+				}
 			}
 			if (input.equals("10")) {
 				check = hold.get(10).getName();
@@ -325,6 +463,11 @@ public class ReadFile {
 				}
 				if (b == 0) {
 					pickedCourses.add(hold.get(10));
+				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
 				}
 			}
 			if (input.equals("11")) {
@@ -338,6 +481,11 @@ public class ReadFile {
 				if (b == 0) {
 					pickedCourses.add(hold.get(11));
 				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
+				}
 			}
 			if (input.equals("12")) {
 				check = hold.get(12).getName();
@@ -349,6 +497,11 @@ public class ReadFile {
 				}
 				if (b == 0) {
 					pickedCourses.add(hold.get(12));
+				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
 				}
 			}
 			if (input.equals("13")) {
@@ -362,6 +515,11 @@ public class ReadFile {
 				if (b == 0) {
 					pickedCourses.add(hold.get(13));
 				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
+				}
 			}
 			if (input.equals("14")) {
 				check = hold.get(14).getName();
@@ -373,6 +531,11 @@ public class ReadFile {
 				}
 				if (b == 0) {
 					pickedCourses.add(hold.get(14));
+				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
 				}
 			}
 			if (input.equals("15")) {
@@ -386,6 +549,11 @@ public class ReadFile {
 				if (b == 0) {
 					pickedCourses.add(hold.get(15));
 				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
+				}
 			}
 			if (input.equals("16")) {
 				check = hold.get(16).getName();
@@ -397,6 +565,11 @@ public class ReadFile {
 				}
 				if (b == 0) {
 					pickedCourses.add(hold.get(16));
+				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
 				}
 			}
 			if (input.equals("17")) {
@@ -410,6 +583,11 @@ public class ReadFile {
 				if (b == 0) {
 					pickedCourses.add(hold.get(17));
 				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
+				}
 			}
 			if (input.equals("18")) {
 				check = hold.get(18).getName();
@@ -422,6 +600,11 @@ public class ReadFile {
 				if (b == 0) {
 					pickedCourses.add(hold.get(18));
 				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
+				}
 			}
 			if (input.equals("19")) {
 				check = hold.get(19).getName();
@@ -433,6 +616,11 @@ public class ReadFile {
 				}
 				if (b == 0) {
 					pickedCourses.add(hold.get(19));
+				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
 				}
 			}
 
@@ -447,6 +635,11 @@ public class ReadFile {
 				if (b == 0) {
 					pickedCourses.add(hold.get(20));
 				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
+				}
 			}
 			if (input.equals("21")) {
 				check = hold.get(21).getName();
@@ -458,6 +651,11 @@ public class ReadFile {
 				}
 				if (b == 0) {
 					pickedCourses.add(hold.get(21));
+				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
 				}
 			}
 			if (input.equals("22")) {
@@ -471,6 +669,11 @@ public class ReadFile {
 				if (b == 0) {
 					pickedCourses.add(hold.get(22));
 				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
+				}
 			}
 			if (input.equals("23")) {
 				check = hold.get(23).getName();
@@ -483,15 +686,17 @@ public class ReadFile {
 				if (b == 0) {
 					pickedCourses.add(hold.get(23));
 				}
+				else {
+					System.out.println();
+					System.out.println("ERROR: The course you selected already exists in your schedule");
+					System.out.println();
+				}
 			}
+
 		}
-	}
-
-
-	public static void main(String[] args) {
-		ReadingFile("new_file.txt");
-		ReadFile a = new ReadFile();
-		a.Choose();
+		fileWriter("out.txt", pickedCourses, studentName, studentID);
+		System.out.println("Thank you for using Team2 course registering app!");
+		System.out.println("Your course schedule is exported as a .txt file.");
 	}
 
 }

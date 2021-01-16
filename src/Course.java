@@ -3,7 +3,6 @@ import java.util.Collections;
 
 public class Course {
 	
-	//Variables 
 	String name;
 	String instructor;
 	String meetTime;
@@ -50,7 +49,17 @@ public class Course {
 	public void setSection(String section) {
 		this.section = section;
 	}
-
+	
+	/**
+	 * Course constructor. Each Course will have information such as the course's name, course ID/code, instructor name, 
+	 * meeting time, and course section number. 
+	 * 
+	 * @param name
+	 * @param courseCode
+	 * @param instructor
+	 * @param meetTime
+	 * @param section
+	 */
 	public Course(String name, String courseCode, String instructor, String meetTime, String section) {
 
 		if (name == null) {
