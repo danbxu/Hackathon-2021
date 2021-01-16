@@ -33,21 +33,16 @@ public class ReadFile {
 			String courseCode = dump[0];
 
 			//System.out.println(courseCode);
-
 			String name = dump[1];
 
 			//System.out.println(name);
-
 			String section = dump[3];
-
 			//System.out.println(section);
 
 			String meetTime = dump[5];
-
 			//System.out.println(meetTime);
 
 			String instructor = dump[6];
-
 			//System.out.println(instructor);
 
 			//Create newCourse
@@ -58,9 +53,10 @@ public class ReadFile {
 			hold.add(newCourse);
 		}
 	}
-	
-	
-	boolean correctInput2(int a ) {
+
+
+	//included/ needed to discuss
+	boolean correctInput2(int a) {
 		if (a >= 0 && a <= 23) {
 			return true;
 		}
@@ -68,7 +64,7 @@ public class ReadFile {
 			return false;
 		}
 	}
-	
+
 	//Not sure if to use string or int 
 	boolean correctInput(String a) {
 		if (a.equals("0")) {
@@ -143,7 +139,7 @@ public class ReadFile {
 		if (a.equals("23")) {
 			return true;
 		}
-		
+
 		else {
 			return false;
 		}
@@ -152,15 +148,13 @@ public class ReadFile {
 
 	public void Choose() {
 		ArrayList<Course> pickedCourses = new ArrayList<Course>();
-
-
 		boolean donePicking = false;
 		Scanner a = new Scanner(System.in);
 		String check;
-		int b = 0;
+
 
 		while (!donePicking) {
-		
+			int b = 0;
 			if (pickedCourses.size() > 0) {
 				if (pickedCourses.size() == 4) {
 					System.out.println("You have 4 courses in your schedule" );
@@ -194,14 +188,12 @@ public class ReadFile {
 
 			String input = a.nextLine();
 			//Checking if courses exist
-			
-			
-			
+
 			while (correctInput(input) != true) {
-			System.out.println("Please enter an number from 0 to 23");
+				System.out.println("Please enter an number from 0 to 23");
 				input = a.nextLine();
 			}
-			
+
 			//Need to implement way to input into file while checking if the course already exists
 			if (input.equals("0")) {
 				check = hold.get(0).getName();
@@ -443,7 +435,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(19));
 				}
 			}
-			
+
 			if (input.equals("20")) {
 				check = hold.get(20).getName();
 
@@ -492,16 +484,14 @@ public class ReadFile {
 					pickedCourses.add(hold.get(23));
 				}
 			}
-			}
 		}
-	
+	}
+
 
 	public static void main(String[] args) {
 		ReadingFile("new_file.txt");
 		ReadFile a = new ReadFile();
 		a.Choose();
-
-
 	}
 
 }
