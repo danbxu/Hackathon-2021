@@ -12,7 +12,7 @@ public class ReadFile {
 	//Container to hold all 24 courses
 	static ArrayList<Course> hold = new ArrayList<Course>();
 
-	
+
 	/**
 	 * This method takes an input file with all the courses scrapped from the website and puts the courses
 	 * in a ArrayList<Course> container. ReadingFile() calls on parseAndInsert() to parse each line of the input file
@@ -71,7 +71,7 @@ public class ReadFile {
 			hold.add(newCourse);
 		}
 	}
-	
+
 	/**
 	 * This method creates and writes to the output file called "out.txt". 
 	 * 
@@ -89,7 +89,7 @@ public class ReadFile {
 		SimpleDateFormat dateStruc = new SimpleDateFormat("MM/DD/YYYY HH:MM:SS");
 		Date date = new Date();
 
-		
+
 		test.println("Name: " + studentName);
 		test.println("Student ID: " + studentID);
 		test.println("Date/Time: " + dateStruc.format(date));
@@ -101,9 +101,7 @@ public class ReadFile {
 					"\n    Section " + arr.get(i).getSection() + " " + arr.get(i).getMeetTime() + 
 					"\n    Instructor: " + arr.get(i).getInstructor());
 		}
-
-		test.println();
-		test.println("Comments to:");
+		test.println("\nComments to:");
 		test.println("	Office of the University Registrar");
 		test.println("	University of Pennsylvania");
 		test.println("	Room 150 Franklin Building");
@@ -111,19 +109,8 @@ public class ReadFile {
 		test.println("	Philadelphia, PA 19104-6291");
 		test.println("	Phone: (215) 898-6636 Fax: (215) 573-2076");
 		test.println("	registra@pobox.upenn.edu");
-		
 		test.close();
 
-	}
-
-	//NOTUSED
-	boolean correctInput2(int a) {
-		if (a >= 0 && a <= 23) {
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 
 	/**
@@ -212,8 +199,8 @@ public class ReadFile {
 		}
 
 	}
-	
-	
+
+
 	/**
 	 * This method prompts the user to enter Name/StudentID and finally shows a list of available courses for spring 2021.
 	 * This method repeatedly prompts the user to add classes and only exits when either (1) user wishes to "Exit" 
@@ -241,32 +228,73 @@ public class ReadFile {
 			int b = 0;
 			if (pickedCourses.size() > 0) {
 				if (pickedCourses.size() == 4) {
-					System.out.println();
-					System.out.println("You have 4 courses in your schedule" );
-					System.out.println("Your course schedule is complete");
-					System.out.println();
-//					if (a.nextLine().equals("Exit")) {
-						break;
-//					}
-					//Can implement removing classes here
+					System.out.println("\nYou have 4 courses in your schedule");
+					System.out.println("Your course schedule is complete \n");
+					System.out.println("The following is your course selection(s): \n");
+
+					for (int i = 0; i < pickedCourses.size(); i++) {
+						System.out.println((i) + ": " + pickedCourses.get(i).getCourseCode()+ " " + pickedCourses.get(i).getName() + 
+								"\n    Section " + pickedCourses.get(i).getSection() + " " + pickedCourses.get(i).getMeetTime() + 
+								"\n    Instructor: " + pickedCourses.get(i).getInstructor());
+					}
+					break;
+
+					//Can implement more complex method of editing course selection here in the future
 				}
 				else {
+					System.out.println("\nYou have " + pickedCourses.size() + " course(s) in your schedule");
+					System.out.println("           Max 4 courses \n");
+					System.out.println("==Enter one of the following options==");
+					System.out.println("\"Exit\" to end your registration");
+					System.out.println("\"Show\" to show your course selection(s)");
+					System.out.println("\"Undo\" to remove your previous selection");
+					System.out.println("\nor Enter anything else to select additional courses");
+
+				}
+
+				String split = a.nextLine(); 
+				if(split.equals("Show") || split.equals("show")) {
 					System.out.println();
-					System.out.println("You have " + pickedCourses.size() + " course(s) in your schedule");
-					System.out.println("You can have a maximum of 4 courses");
+					System.out.println("Your current selection(s)");
+					for (int i = 0; i < pickedCourses.size(); i++) {
+						System.out.println((i) + ": " + pickedCourses.get(i).getCourseCode()+ " " + pickedCourses.get(i).getName() + 
+								"\n    Section " + pickedCourses.get(i).getSection() + " " + pickedCourses.get(i).getMeetTime() + 
+								"\n    Instructor: " + pickedCourses.get(i).getInstructor());
+					}
 					System.out.println();
-					System.out.println("If you are done registering, enter \"Exit\" or enter anything to continue");
-					if (a.nextLine().equals("Exit")) {
+					System.out.println("==Enter one of the following options==");
+					System.out.println("\"Exit\" to end your registration");
+					System.out.println("\"Undo\" to remove your previous selection");
+					System.out.println("\nor Enter anything to continue");
+					
+					String split2 = a.nextLine();
+					if (split2.equals("Exit")) {
 						break;
 					}
-					//Can implement removing classes here
+					if (split2.equals("Undo") || split2.equals("undo")) {
+						System.out.println();
+						System.out.println(pickedCourses.get(pickedCourses.size() - 1).getCourseCode() + ": " + pickedCourses.get(pickedCourses.size() - 1).getName() + " has been removed");
+						pickedCourses.remove(pickedCourses.size() - 1);
+					}
 				}
+				if (split.equals("Exit") || split.equals("exit")) {
+					break;
+
+				}
+				if (split.equals("Undo") || split.equals("undo")) {
+					System.out.println();
+					System.out.println(pickedCourses.get(pickedCourses.size() - 1).getCourseCode() + ": " + pickedCourses.get(pickedCourses.size() - 1).getName() + " has been removed");
+					pickedCourses.remove(pickedCourses.size() - 1);
+				}
+
+				//Can implement more complex method of editing course selection here in the future
 			}
-			System.out.println("Please choose one of the following courses below by entering the number proceeding the course (only numbers 0 => 23)");
-			System.out.println();
-			System.out.println("You currently have " + pickedCourses.size() + " courses in your schedule.");
-			System.out.println("(Students may only enroll in 4 courses maximum)");
-			System.out.println();
+			System.out.println("\nPlease choose one of the following courses below \n  by entering the number proceeding the course "
+					+ "\n           (only numbers 0 => 23) \n");
+			System.out.println("=================================================");
+			System.out.println("==You currently have " + pickedCourses.size() + " courses in your schedule==");
+			System.out.println("==Students may only enroll in 4 courses maximum==");
+			System.out.println("================================================= \n");
 			for (int i = 0; i < hold.size(); i++) {
 				System.out.println(i + ": " + hold.get(i).getCourseCode()+ " " + hold.get(i).getName() + 
 						"\n    Section " + hold.get(i).getSection() + " " + hold.get(i).getMeetTime() + 
@@ -274,15 +302,12 @@ public class ReadFile {
 			}
 
 			String input = a.nextLine();
-			//Checking if courses exist
-
 			while (correctInput(input) != true) {
 				System.out.println("Please enter an number from 0 to 23");
 				input = a.nextLine();
 			}
 
-
-			//Need to implement way to input into file while checking if the course already exists
+			//Ifbranches below checks if course already exists
 			if (input.equals("0")) {
 				check = hold.get(0).getName();
 
@@ -295,9 +320,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(0));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("1")) {
@@ -312,9 +335,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(1));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("2")) {
@@ -329,9 +350,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(2));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("3")) {
@@ -346,9 +365,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(3));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("4")) {
@@ -363,9 +380,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(4));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("5")) {
@@ -380,9 +395,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(5));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("6")) {
@@ -397,9 +410,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(6));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("7")) {
@@ -414,9 +425,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(7));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("8")) {
@@ -431,9 +440,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(8));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("9")) {
@@ -448,9 +455,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(9));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("10")) {
@@ -465,9 +470,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(10));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("11")) {
@@ -482,9 +485,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(11));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("12")) {
@@ -499,9 +500,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(12));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("13")) {
@@ -516,9 +515,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(13));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("14")) {
@@ -533,9 +530,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(14));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("15")) {
@@ -550,9 +545,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(15));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("16")) {
@@ -567,9 +560,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(16));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("17")) {
@@ -584,9 +575,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(17));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("18")) {
@@ -601,9 +590,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(18));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("19")) {
@@ -618,9 +605,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(19));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 
@@ -636,9 +621,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(20));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("21")) {
@@ -653,9 +636,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(21));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("22")) {
@@ -670,9 +651,7 @@ public class ReadFile {
 					pickedCourses.add(hold.get(22));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 			if (input.equals("23")) {
@@ -687,16 +666,15 @@ public class ReadFile {
 					pickedCourses.add(hold.get(23));
 				}
 				else {
-					System.out.println();
-					System.out.println("ERROR: The course you selected already exists in your schedule");
-					System.out.println();
+					System.out.println("\n ERROR: The course you selected already exists in your schedule \n");
 				}
 			}
 
 		}
 		fileWriter("out.txt", pickedCourses, studentName, studentID);
-		System.out.println("Thank you for using Team2 course registering app!");
-		System.out.println("Your course schedule is exported as a .txt file.");
+		System.out.println("Thank you "  + studentName + " for using Team2 course registering app!"
+				+ "\n Your course schedule is exported as a .txt file. ");
+
 	}
 
 }
