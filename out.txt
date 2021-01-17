@@ -1,14 +1,20 @@
-Name: Daniel Xu
-Student ID: 232131231
-Date/Time: 01/17/2021 12:01:518
+Name: Daniel
+Student ID: 1231321
+Date/Time: 01/17/2021 14:01:292
 
-Courses Registered: 2
+Courses Registered: 4
 0: CIT-590 PROG LANG AND TECHNIQUES
     Section 001 TBA
     Instructor: KRAKOWSKY B
-1: CIT-595 COMPUTER SYS PROGRAMMING
-    Section 001 MW 10:30-12NOON
-    Instructor: LEE I
+1: CIT-594 DATA STRUC & SOFTW DESGN
+    Section 001 TBA
+    Instructor: FOUH MBINDI E
+2: CIT-596 ALGORITHMS & COMPUTATION
+    Section 001 TBA
+    Instructor: BHUSNURMATH A
+3: CIS-511 THEORY OF COMPUTATION
+    Section 001 TBA
+    Instructor: GALLIER J
 
 Comments to:
 	Office of the University Registrar
