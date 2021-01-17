@@ -205,7 +205,7 @@ public class ReadFile {
 	 * This method prompts the user to enter Name/StudentID and finally shows a list of available courses for spring 2021.
 	 * This method repeatedly prompts the user to add classes and only exits when either (1) user wishes to "Exit" 
 	 * or (2) the user selected 4 courses - maximum number of courses to take per semester. Finally, this method calls
-	 * fileWriter() to out the user's course schedule to a .txt file. 
+	 * fileWriter() to write the user's course schedule to a .txt file. 
 	 * 
 	 * @throws IOException
 	 */
@@ -307,7 +307,7 @@ public class ReadFile {
 				input = a.nextLine();
 			}
 
-			//Ifbranches below checks if course already exists
+			//if branches below checks if course already exists
 			if (input.equals("0")) {
 				check = hold.get(0).getName();
 
